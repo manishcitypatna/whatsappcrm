@@ -111,6 +111,7 @@ export function Step2SelectAudience({
   }, [accountId, supabase]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchTags();
   }, [fetchTags]);
 
@@ -220,6 +221,7 @@ export function Step2SelectAudience({
   ]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchEstimatedCount();
   }, [fetchEstimatedCount]);
 

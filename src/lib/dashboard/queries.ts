@@ -39,8 +39,8 @@ export async function loadMetrics(db: DB, accountId?: string): Promise<MetricsBu
   let contactsToday = db.from('contacts').select('id', { count: 'exact', head: true }).gte('created_at', todayStart)
   let contactsYesterday = db.from('contacts').select('id', { count: 'exact', head: true }).gte('created_at', yesterdayStart).lt('created_at', todayStart)
   let deals = db.from('deals').select('value, status').eq('status', 'open')
-  let msgsToday = db.from('messages').select('id', { count: 'exact', head: true }).eq('sender_type', 'agent').gte('created_at', todayStart)
-  let msgsYesterday = db.from('messages').select('id', { count: 'exact', head: true }).eq('sender_type', 'agent').gte('created_at', yesterdayStart).lt('created_at', todayStart)
+  const msgsToday = db.from('messages').select('id', { count: 'exact', head: true }).eq('sender_type', 'agent').gte('created_at', todayStart)
+  const msgsYesterday = db.from('messages').select('id', { count: 'exact', head: true }).eq('sender_type', 'agent').gte('created_at', yesterdayStart).lt('created_at', todayStart)
 
   if (accountId) {
     conversations = conversations.eq('account_id', accountId)
@@ -107,7 +107,7 @@ export async function loadConversationsSeries(
 ): Promise<ConversationsSeriesPoint[]> {
   const start = daysAgoStart(rangeDays - 1).toISOString()
 
-  let query = db
+  const query = db
     .from('messages')
     .select('created_at, sender_type')
     .gte('created_at', start)
@@ -140,7 +140,7 @@ export async function loadConversationsSeries(
 // --- 3. Pipeline donut -------------------------------------------------
 
 export async function loadPipelineDonut(db: DB, accountId?: string): Promise<PipelineDonutData> {
-  let stagesQuery = db.from('pipeline_stages').select('id, name, color, pipeline_id, position').order('position')
+  const stagesQuery = db.from('pipeline_stages').select('id, name, color, pipeline_id, position').order('position')
   let dealsQuery = db.from('deals').select('stage_id, value, status').eq('status', 'open')
 
   if (accountId) {
@@ -198,7 +198,7 @@ export async function loadResponseTime(db: DB, accountId?: string): Promise<Resp
   // Monday.
   const fourteenDaysAgo = daysAgoStart(13).toISOString()
 
-  let query = db
+  const query = db
     .from('messages')
     .select('conversation_id, sender_type, created_at')
     .gte('created_at', fourteenDaysAgo)
@@ -299,7 +299,7 @@ export async function loadActivity(db: DB, accountId?: string, limit = 20): Prom
   // Pull ~10 from each source (plenty of headroom after merge-sort),
   // then interleave by timestamp. The individual per-table limits
   // keep the payload small; the final limit is enforced after sort.
-  let msgsQuery = db
+  const msgsQuery = db
     .from('messages')
     .select('id, content_text, sender_type, created_at, conversation_id, conversations(contact_id, contacts(name, phone))')
     .eq('sender_type', 'customer')

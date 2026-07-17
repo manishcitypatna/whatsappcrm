@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 
 import { createClient } from '@/lib/supabase/client';
@@ -50,18 +50,7 @@ export function ContactForm({
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
   const [loadingTags, setLoadingTags] = useState(false);
 
-  useEffect(() => {
-    if (open) {
-      setName(contact?.name ?? '');
-      setPhone(contact?.phone ?? '');
-      setEmail(contact?.email ?? '');
-      setCompany(contact?.company ?? '');
-      setSelectedTagIds(contactTags.map((ct) => ct.tag_id));
-      fetchTags();
-    }
-  }, [open, contact]);
-
-  async function fetchTags() {
+  const fetchTags = useCallback(async () => {
     if (!accountId) return;
     setLoadingTags(true);
     const { data } = await supabase
@@ -71,7 +60,19 @@ export function ContactForm({
       .order('name');
     if (data) setTags(data);
     setLoadingTags(false);
-  }
+  }, [accountId, supabase]);
+
+  useEffect(() => {
+    if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setName(contact?.name ?? '');
+      setPhone(contact?.phone ?? '');
+      setEmail(contact?.email ?? '');
+      setCompany(contact?.company ?? '');
+      setSelectedTagIds(contactTags.map((ct) => ct.tag_id));
+      fetchTags();
+    }
+  }, [open, contact, contactTags, fetchTags]);
 
   function toggleTag(tagId: string) {
     setSelectedTagIds((prev) =>

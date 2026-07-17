@@ -44,10 +44,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // boot script in layout.tsx has already applied the visual mode.
   const [mode, setModeState] = useState<ThemeMode>(DEFAULT_MODE);
 
-  // Read the actual mode on mount and update state.
+  // Read the actual mode on mount and update state. This runs once,
+  // client-only, after the hydration-safe DEFAULT_MODE render above —
+  // the setState here is what the mismatch-avoidance strategy exists
+  // for, not an accident the lint rule should steer us away from.
   useEffect(() => {
     const modeFromAttr = document.documentElement.dataset.mode;
     if (isThemeMode(modeFromAttr)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setModeState(modeFromAttr);
     } else {
       try {

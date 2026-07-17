@@ -303,7 +303,11 @@ function FlowCanvasInner() {
 
   const [rfNodes, setRfNodes] = useState<RfNode<NodeData>[]>(derivedRfNodes);
 
+  // rfNodes is a local, draggable copy of derivedRfNodes — React Flow
+  // mutates it directly on drag, so it can't just be the memo itself.
+  // This effect re-syncs it whenever the upstream derivation changes.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRfNodes(derivedRfNodes);
   }, [derivedRfNodes]);
 
