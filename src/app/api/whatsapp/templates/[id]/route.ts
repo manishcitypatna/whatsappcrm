@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
 import { decrypt } from '@/lib/whatsapp/encryption'
 import {
   deleteMessageTemplate,
@@ -150,7 +149,7 @@ export async function PATCH(
     }
 
     // Meta accepted the edit — status flips back to PENDING for review.
-    const { data: row, error: updErr } = await supabase
+    const { error: updErr } = await supabase
       .from('message_templates')
       .update({
         category: payload.category,

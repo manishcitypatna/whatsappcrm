@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
 import { createClient as createAdminClient } from '@supabase/supabase-js'
 import {
   registerPhoneNumber,
@@ -7,7 +6,7 @@ import {
   verifyPhoneNumber,
 } from '@/lib/whatsapp/meta-api'
 import { encrypt, decrypt } from '@/lib/whatsapp/encryption'
-import { getCurrentAccount, toErrorResponse } from '@/lib/auth/account'
+import { getCurrentAccount } from '@/lib/auth/account'
 
 // Lazy-initialised service-role client. We need it to detect a
 // phone_number_id already claimed by a *different* account — under RLS,
