@@ -191,7 +191,7 @@ export default function BroadcastDetailPage() {
     }
 
     fetchData();
-  }, [broadcastId]);
+  }, [broadcastId, accountId]);
 
   const filteredRecipients = useMemo(
     () =>

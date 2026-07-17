@@ -111,7 +111,7 @@ export function Step3Personalize({
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [accountId]);
 
   const placeholders = useMemo(() => {
     const matches = template.body_text.match(/\{\{(\d+)\}\}/g);

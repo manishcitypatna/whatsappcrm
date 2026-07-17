@@ -111,7 +111,7 @@ export function ContactDetailView({
     if (contactTagsRes.data) {
       setContactTagIds(contactTagsRes.data.map((ct) => ct.tag_id));
     }
-  }, [contactId, supabase]);
+  }, [contactId, accountId, supabase]);
 
   const fetchNotes = useCallback(async () => {
     if (!contactId) return;
@@ -152,7 +152,7 @@ export function ContactDetailView({
       setCustomValues(map);
     }
     setLoadingCustom(false);
-  }, [contactId, supabase]);
+  }, [contactId, accountId, supabase]);
 
   const fetchDeals = useCallback(async () => {
     if (!contactId) return;
