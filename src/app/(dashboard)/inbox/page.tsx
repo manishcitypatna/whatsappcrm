@@ -514,9 +514,9 @@ export default function InboxPage() {
       {/* WhatsApp connection banner — in the flex column, not absolute,
           so it pushes the panels down instead of overlapping them. */}
       {whatsappConnected === false && (
-        <div className="flex shrink-0 items-center justify-center gap-2  border-amber-500/20 bg-amber-500/10 px-4 py-2">
-          <WifiOff className="h-4 w-4 text-amber-400" />
-          <p className="text-xs text-amber-400">
+        <div className="flex shrink-0 items-center justify-center gap-2 border-b border-amber-500/30 bg-amber-500/20 px-4 py-2 backdrop-blur-[var(--blur-glass)]">
+          <WifiOff className="h-4 w-4 text-[var(--warning-foreground)]" />
+          <p className="text-xs font-medium text-[var(--warning-foreground)]">
             WhatsApp® is not connected. Go to Settings to connect your account.
           </p>
         </div>

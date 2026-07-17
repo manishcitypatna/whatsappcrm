@@ -119,16 +119,39 @@ const STATUS_OPTIONS: { label: string; value: ConversationStatus; color: string 
 ];
 
 /**
- * WhatsApp-style doodle background applied to the chat area (both the
- * active thread and the empty state). The SVG tile lives at
- * `/public/inbox-doodle.svg`; the slate-950 colour sits underneath so
- * the doodles read as a subtle pattern rather than a stark grid.
+ * WhatsApp-style doodle canvas shared by the active thread and the
+ * empty state, so switching between them doesn't change the pattern
+ * under the user's eye. The tile lives at
+ * `/public/images/message-bg.avif`, rendered in its own low-opacity
+ * layer behind the translucent `bg-card` glass base (same token every
+ * other panel uses) so it reads as a subtle texture instead of a stark
+ * sticker sheet — and so it tints with the rest of the theme instead
+ * of sitting on a flat opaque background. `backdrop-blur` on the base
+ * layer gives the panel its own stacking context so it paints above
+ * the fixed app-wide background instead of behind it.
  *
  * Defined once at module scope so the two render paths can't drift —
  * if we ever switch the asset, both spots update together.
  */
-const DOODLE_BG_CLASSES =
-  "bg-background bg-[url('/inbox-doodle.svg')] bg-repeat";
+function DoodleCanvas({
+  className,
+  contentClassName,
+  children,
+}: {
+  className?: string;
+  contentClassName?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={cn("relative flex flex-1 flex-col bg-card backdrop-blur-[var(--blur-glass)]", className)}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[url('/images/message-bg.avif')] bg-repeat opacity-[0.08] dark:opacity-[0.14]"
+      />
+      <div className={cn("relative z-10 flex flex-1 flex-col", contentClassName)}>{children}</div>
+    </div>
+  );
+}
 
 export function MessageThread({
   conversation,
@@ -693,20 +716,23 @@ export function MessageThread({
 
   // Empty state — same WhatsApp-style doodle background as the active
   // thread below, so swapping between empty/selected doesn't change the
-  // pattern under the user's eye.
+  // pattern under the user's eye. The icon/text sit on their own
+  // bg-card scrim so they stay legible over the doodle.
   if (!conversation || !contact) {
     return (
-      <div className={cn("flex flex-1 flex-col items-center justify-center", DOODLE_BG_CLASSES)}>
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface-sunken">
-          <MessageSquare className="h-8 w-8 text-muted-foreground" />
+      <DoodleCanvas contentClassName="items-center justify-center">
+        <div className="flex flex-col items-center rounded-2xl bg-card px-8 py-6 shadow-raised-sm backdrop-blur-[var(--blur-glass-strong)]">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-surface-sunken">
+            <MessageSquare className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <h3 className="mt-4 text-sm font-medium text-muted-foreground">
+            Select a conversation
+          </h3>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Choose a conversation from the left to start messaging
+          </p>
         </div>
-        <h3 className="mt-4 text-sm font-medium text-muted-foreground">
-          Select a conversation
-        </h3>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Choose a conversation from the left to start messaging
-        </p>
-      </div>
+      </DoodleCanvas>
     );
   }
 
@@ -722,7 +748,7 @@ export function MessageThread({
     : "Assign";
 
   return (
-    <div className={cn("flex flex-1 flex-col", DOODLE_BG_CLASSES)}>
+    <DoodleCanvas>
       {/* Header — solid bg-card backdrop-blur-[var(--blur-glass)] sits on top of the doodle so the
           name/avatar/dropdowns stay legible. */}
       <div className="flex items-center justify-between gap-2   bg-card backdrop-blur-[var(--blur-glass)] px-3 py-3 sm:px-4">
@@ -952,6 +978,6 @@ export function MessageThread({
         onOpenChange={setTemplateModalOpen}
         onSelect={handleSendTemplate}
       />
-    </div>
+    </DoodleCanvas>
   );
 }

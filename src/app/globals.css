@@ -149,6 +149,11 @@ html[data-mode="light"] {
      text legible without flattening the image into pastel mush. The
      photo itself should still read as vivid and in-focus. */
   --bg-scrim-opacity: 0.14;
+  /* Warning text (e.g. the WhatsApp-disconnected banner) over an
+     amber-tinted glass panel. Tailwind's dark: variant is scoped to a
+     literal .dark class this app never applies (mode is toggled via
+     data-mode instead) — so this token, not dark:, is what adapts. */
+  --warning-foreground: oklch(0.4 0.14 55);
 }
 
 /* ---------- DARK ----------
@@ -216,6 +221,7 @@ html[data-mode="dark"] {
      a much heavier wash to actually read as dark — this is the one
      token that intentionally differs a lot between the two blocks. */
   --bg-scrim-opacity: 0.62;
+  --warning-foreground: oklch(0.9 0.1 85);
 }
 
 @layer base {
