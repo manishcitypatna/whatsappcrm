@@ -1,0 +1,278 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-glass-edge: var(--glass-edge);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --shadow-raised-sm: var(--shadow-raised-sm);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-raised-lg: var(--shadow-raised-lg);
+  --shadow-inset: var(--shadow-inset);
+  --shadow-inset-sm: var(--shadow-inset-sm);
+  --shadow-floating: var(--shadow-floating);
+  --blur-glass: var(--blur-glass);
+  --blur-glass-strong: var(--blur-glass-strong);
+}
+
+/* ============================================================
+ * GLASSMORPHISM DESIGN SYSTEM
+ *
+ * One fixed two-color brand — Violet (primary) + Cyan (secondary/
+ * accent) — crossed with light/dark mode (data-mode on <html>).
+ * No per-user accent picker; shades/tints of the same two hues do
+ * all the differentiation work, per design brief.
+ *
+ * Surfaces (--card/--popover/--secondary/--muted/--accent/
+ * --sidebar) are translucent (oklch(... / alpha)) instead of
+ * opaque, so the animated gradient background
+ * (`AnimatedBackground`, mounted once in layout.tsx) shows through
+ * every panel. Depth comes from backdrop-blur (--blur-glass /
+ * --blur-glass-strong, applied per-component) + a soft ambient
+ * drop shadow + a thin translucent border (--border) that catches
+ * light like a glass edge — not from color-coded elevation.
+ *
+ * --shadow-raised-sm/raised/raised-lg/inset/inset-sm/floating keep
+ * the same names as the earlier neumorphic system (so components
+ * that already reference them keep working) but now resolve to
+ * single soft drop-shadows (+ a faint inner highlight for "inset"
+ * states) appropriate for glass instead of dual embossed shadows.
+ * ============================================================ */
+
+:root {
+  /* Tuned so the largest corner in common use (rounded-2xl, on
+     cards/dialogs/sheets) lands at ~18-20px instead of ~33px — a
+     minimal, less "bubbly" radius across every scale step. */
+  --radius: 0.7rem;
+  --blur-glass: 28px;
+  --blur-glass-strong: 36px;
+}
+
+/* ---------- LIGHT (default) ---------- */
+:root,
+html[data-mode="light"] {
+  --background: oklch(0.97 0.008 264);
+  --foreground: oklch(0.22 0.03 264);
+  --card: oklch(1 0 0 / 0.1);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0 / 0.16);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.55 0.22 293);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-hover: oklch(0.61 0.2 293);
+  --primary-soft: oklch(0.55 0.22 293 / 0.12);
+  --primary-soft-2: oklch(0.55 0.22 293 / 0.22);
+  --secondary: oklch(0.78 0.13 195 / 0.2);
+  --secondary-foreground: oklch(0.32 0.07 195);
+  --surface-sunken: oklch(1 0 0 / 0.32);
+  --muted: oklch(1 0 0 / 0.42);
+  --muted-foreground: oklch(0.44 0.03 264);
+  --accent: oklch(0.78 0.13 195 / 0.18);
+  --accent-foreground: oklch(0.3 0.07 195);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(1 0 0 / 0.65);
+  --glass-edge: oklch(1 0 0 / 0.15);
+  --input: oklch(1 0 0 / 0.5);
+  --ring: var(--primary);
+  --shadow-tint: oklch(0.32 0.05 280 / 1);
+  --shadow-raised-sm: 0 2px 10px oklch(0.32 0.05 280 / 0.12);
+  --shadow-raised: 0 10px 34px oklch(0.32 0.05 280 / 0.14);
+  --shadow-raised-lg: 0 20px 56px oklch(0.32 0.05 280 / 0.18);
+  --shadow-inset: inset 0 1px 1px oklch(1 0 0 / 0.7), inset 0 -1px 10px oklch(0.32 0.05 280 / 0.08);
+  --shadow-inset-sm: inset 0 1px 1px oklch(1 0 0 / 0.6), inset 0 -1px 5px oklch(0.32 0.05 280 / 0.06);
+  --shadow-floating: 0 28px 70px oklch(0.32 0.05 280 / 0.22), 0 2px 10px oklch(0.32 0.05 280 / 0.12);
+  --chart-1: var(--primary);
+  --chart-2: oklch(0.7 0.13 195);
+  --chart-3: oklch(0.6 0.02 264);
+  --chart-4: oklch(0.72 0.02 264);
+  --chart-5: oklch(0.82 0.02 264);
+  --sidebar: oklch(1 0 0 / 0.1);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: oklch(1 0 0 / 0.5);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(1 0 0 / 0.15);
+  --sidebar-ring: var(--primary);
+  /* Animated background blob colors — shades of the two brand hues only. */
+  --bg-blob-1: oklch(0.62 0.23 293 / 0.65);
+  --bg-blob-2: oklch(0.76 0.16 195 / 0.6);
+  --bg-blob-3: oklch(0.8 0.14 293 / 0.5);
+  --bg-blob-4: oklch(0.68 0.24 340 / 0.55);
+  --bg-blob-5: oklch(0.74 0.17 220 / 0.5);
+  --bg-base-a: oklch(0.95 0.02 293 / 1);
+  --bg-base-b: oklch(0.95 0.03 195 / 1);
+  /* Light wash over the background photo — just enough to keep body
+     text legible without flattening the image into pastel mush. The
+     photo itself should still read as vivid and in-focus. */
+  --bg-scrim-opacity: 0.14;
+}
+
+/* ---------- DARK ----------
+ * The technique that actually reads as "glass" in dark mode is a
+ * LIGHT-tinted frost (white at low alpha) over a much darker, more
+ * saturated backdrop — not a dark tint on an already-dark page
+ * (that just reads as flat, no matter how much blur you add,
+ * because there's no lightness contrast between the panel and what
+ * little light passes through it). So: page base goes much darker,
+ * blobs go much more saturated/opaque, and every surface token
+ * flips to a white-tinted alpha instead of a dark-tinted one.
+ * ---------------------------------------------------------------- */
+html[data-mode="dark"] {
+  --background: oklch(0.09 0.02 264);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(1 0 0 / 0.07);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0 / 0.09);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.7 0.19 293);
+  --primary-foreground: oklch(0.99 0 0);
+  --primary-hover: oklch(0.76 0.17 293);
+  --primary-soft: oklch(0.7 0.19 293 / 0.18);
+  --primary-soft-2: oklch(0.7 0.19 293 / 0.3);
+  --secondary: oklch(0.75 0.14 195 / 0.18);
+  --secondary-foreground: oklch(0.88 0.09 195);
+  --surface-sunken: oklch(0 0 0 / 0.3);
+  --muted: oklch(1 0 0 / 0.06);
+  --muted-foreground: oklch(0.74 0.02 264);
+  --accent: oklch(0.75 0.14 195 / 0.16);
+  --accent-foreground: oklch(0.88 0.09 195);
+  --destructive: oklch(0.66 0.21 25);
+  --border: oklch(1 0 0 / 0.22);
+  --glass-edge: oklch(1 0 0 / 0.14);
+  --input: oklch(0 0 0 / 0.32);
+  --ring: var(--primary);
+  --shadow-tint: oklch(0 0 0 / 1);
+  --shadow-raised-sm: 0 2px 14px oklch(0 0 0 / 0.5);
+  --shadow-raised: 0 14px 40px oklch(0 0 0 / 0.55);
+  --shadow-raised-lg: 0 24px 64px oklch(0 0 0 / 0.62);
+  --shadow-inset: inset 0 1px 1px oklch(1 0 0 / 0.1), inset 0 -1px 14px oklch(0 0 0 / 0.4);
+  --shadow-inset-sm: inset 0 1px 1px oklch(1 0 0 / 0.08), inset 0 -1px 7px oklch(0 0 0 / 0.35);
+  --shadow-floating: 0 34px 90px oklch(0 0 0 / 0.65), 0 4px 16px oklch(0 0 0 / 0.4);
+  --chart-1: var(--primary);
+  --chart-2: oklch(0.8 0.15 195);
+  --chart-3: oklch(0.6 0.02 264);
+  --chart-4: oklch(0.45 0.02 264);
+  --chart-5: oklch(0.32 0.02 264);
+  --sidebar: oklch(1 0 0 / 0.05);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: oklch(1 0 0 / 0.1);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(1 0 0 / 0.12);
+  --sidebar-ring: var(--primary);
+  --bg-blob-1: oklch(0.55 0.24 293 / 0.8);
+  --bg-blob-2: oklch(0.68 0.17 195 / 0.7);
+  --bg-blob-3: oklch(0.38 0.2 293 / 0.65);
+  --bg-blob-4: oklch(0.52 0.26 340 / 0.65);
+  --bg-blob-5: oklch(0.48 0.19 220 / 0.6);
+  --bg-base-a: oklch(0.08 0.025 293 / 1);
+  --bg-base-b: oklch(0.07 0.02 195 / 1);
+  /* The source photo is bright regardless of mode, so dark mode needs
+     a much heavier wash to actually read as dark — this is the one
+     token that intentionally differs a lot between the two blocks. */
+  --bg-scrim-opacity: 0.62;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-transparent text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ------------------------------------------------------------
+ * Animated background blobs — see AnimatedBackground component.
+ * Five large, heavily blurred radial shapes drifting across the
+ * viewport so the backdrop is always visibly alive behind the glass
+ * panels. Each blob gets its own path/duration/delay so the motion
+ * reads as organic rather than mechanical/looping-in-sync — faster
+ * and with a wider travel range than a typical "ambient" glow, per
+ * the brief to make the whole page feel more dynamic.
+ * ------------------------------------------------------------ */
+@keyframes blob-float-1 {
+  0% { transform: translate(-14%, -10%) scale(1) rotate(0deg); }
+  50% { transform: translate(18%, 14%) scale(1.25) rotate(20deg); }
+  100% { transform: translate(-14%, -10%) scale(1) rotate(0deg); }
+}
+@keyframes blob-float-2 {
+  0% { transform: translate(12%, -16%) scale(1.15) rotate(0deg); }
+  50% { transform: translate(-20%, 10%) scale(0.9) rotate(-25deg); }
+  100% { transform: translate(12%, -16%) scale(1.15) rotate(0deg); }
+}
+@keyframes blob-float-3 {
+  0% { transform: translate(-10%, 16%) scale(0.9) rotate(0deg); }
+  50% { transform: translate(14%, -14%) scale(1.2) rotate(15deg); }
+  100% { transform: translate(-10%, 16%) scale(0.9) rotate(0deg); }
+}
+@keyframes blob-float-4 {
+  0% { transform: translate(16%, 10%) scale(1) rotate(0deg); }
+  50% { transform: translate(-14%, -18%) scale(1.3) rotate(-18deg); }
+  100% { transform: translate(16%, 10%) scale(1) rotate(0deg); }
+}
+@keyframes blob-float-5 {
+  0% { transform: translate(-18%, -8%) scale(1.1) rotate(0deg); }
+  50% { transform: translate(10%, 20%) scale(0.85) rotate(22deg); }
+  100% { transform: translate(-18%, -8%) scale(1.1) rotate(0deg); }
+}
+
+.bg-blob-1 { animation: blob-float-1 13s ease-in-out infinite; }
+.bg-blob-2 { animation: blob-float-2 16s ease-in-out infinite; }
+.bg-blob-3 { animation: blob-float-3 10s ease-in-out infinite; }
+.bg-blob-4 { animation: blob-float-4 14s ease-in-out infinite; }
+.bg-blob-5 { animation: blob-float-5 18s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob-1, .bg-blob-2, .bg-blob-3, .bg-blob-4, .bg-blob-5 {
+    animation: none;
+  }
+}
