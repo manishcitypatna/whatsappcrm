@@ -182,7 +182,7 @@ export default function BroadcastsPage() {
         </div>
       )}
 
-      <div className="flex items-center justify-between">
+      <div className="isolate flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Broadcasts</h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -190,10 +190,11 @@ export default function BroadcastsPage() {
           </p>
         </div>
         <GatedButton
+          variant="outline"
           canAct={canCreate}
           gateReason="create broadcasts"
           onClick={() => router.push('/broadcasts/new')}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
         >
           <Plus className="h-4 w-4" />
           New Broadcast
@@ -208,10 +209,11 @@ export default function BroadcastsPage() {
             Create your first broadcast to reach your contacts at scale.
           </p>
           <GatedButton
+            variant="outline"
             canAct={canCreate}
             gateReason="create broadcasts"
             onClick={() => router.push('/broadcasts/new')}
-            className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90"
+            className="mt-4 bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
           >
             <Plus className="h-4 w-4" />
             New Broadcast

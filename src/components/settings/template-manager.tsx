@@ -450,7 +450,7 @@ export function TemplateManager() {
 
   return (
     <div className="space-y-4 mt-4">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="isolate flex flex-wrap items-center justify-between gap-2">
         <div>
           <h2 className="text-lg font-semibold text-foreground">Message Templates</h2>
           <p className="text-sm text-muted-foreground">
@@ -463,15 +463,16 @@ export function TemplateManager() {
             variant="outline"
             onClick={handleSyncFromMeta}
             disabled={syncing}
-            className=" bg-transparent text-foreground hover:bg-surface-sunken"
+            className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
             title="Pull approved templates from your Meta WhatsApp Business Account"
           >
             <RefreshCw className={`size-4 ${syncing ? 'animate-spin' : ''}`} />
             {syncing ? 'Syncing…' : 'Sync from Meta'}
           </Button>
           <Button
+            variant="outline"
             onClick={openCreate}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
           >
             <Plus className="size-4" />
             New Template

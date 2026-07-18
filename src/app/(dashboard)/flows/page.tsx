@@ -201,7 +201,7 @@ export default function FlowsPage() {
 
   return (
     <div className="space-y-6 p-6">
-      <header className="flex flex-wrap items-end justify-between gap-3">
+      <header className="isolate flex flex-wrap items-end justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-semibold text-foreground">Flows</h1>
@@ -215,9 +215,11 @@ export default function FlowsPage() {
           </p>
         </div>
         <GatedButton
+          variant="outline"
           canAct={canCreate}
           gateReason="create flows"
           onClick={() => setCreateOpen(true)}
+          className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
         >
           <Plus className="h-4 w-4" />
           New flow
@@ -329,7 +331,7 @@ function EmptyState({
   canCreate: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg    bg-card/50 px-6 py-16 text-center">
+    <div className="flex flex-col items-center justify-center rounded-lg bg-card/50 px-6 py-16 text-center backdrop-blur-[var(--blur-glass)]">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-sunken">
         <Workflow className="h-6 w-6 text-muted-foreground" />
       </div>
@@ -342,10 +344,11 @@ function EmptyState({
         the right agent).
       </p>
       <GatedButton
+        variant="outline"
         canAct={canCreate}
         gateReason="create flows"
         onClick={onCreate}
-        className="mt-5"
+        className="mt-5 bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
       >
         <Plus className="h-4 w-4" />
         Create your first flow

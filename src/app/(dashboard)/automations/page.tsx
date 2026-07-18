@@ -159,7 +159,7 @@ export default function AutomationsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="isolate flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Automations</h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -167,10 +167,11 @@ export default function AutomationsPage() {
           </p>
         </div>
         <GatedButton
+          variant="outline"
           canAct={canCreate}
           gateReason="create automations"
           onClick={() => router.push("/automations/new")}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
+          className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
         >
           <Plus className="h-4 w-4" />
           Create Automation
@@ -203,7 +204,7 @@ export default function AutomationsPage() {
       )}
 
       {automations.length === 0 ? (
-        <div className="flex h-48 flex-col items-center justify-center rounded-xl    bg-card/40">
+        <div className="flex h-48 flex-col items-center justify-center rounded-xl bg-card/40 backdrop-blur-[var(--blur-glass)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
             <Zap className="h-6 w-6 text-primary" />
           </div>

@@ -386,17 +386,18 @@ export default function PipelinesPage() {
             canAct={canEditSettings}
             gateReason="create pipelines"
             onClick={() => setNewPipelineOpen(true)}
-            className=" bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken"
+            className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
           >
             <Plus className="mr-1 h-4 w-4" />
             Add Pipeline
           </GatedButton>
           <GatedButton
+            variant="outline"
             canAct={canCreateDeals}
             gateReason="create deals"
             disabled={!selectedPipelineId || stages.length === 0}
             onClick={() => handleAddDeal()}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
           >
             <Plus className="mr-1 h-4 w-4" />
             Add Deal

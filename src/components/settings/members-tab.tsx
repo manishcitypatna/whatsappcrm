@@ -295,7 +295,7 @@ export function MembersTab() {
   return (
     <div className="space-y-6 mt-4">
       {/* Header + invite button */}
-      <div className="flex items-center justify-between">
+      <div className="isolate flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-foreground">Account members</h2>
           <p className="text-sm text-muted-foreground">
@@ -305,8 +305,9 @@ export function MembersTab() {
         </div>
         <RequireRole min="admin">
           <Button
+            variant="outline"
             onClick={() => setInviteOpen(true)}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
           >
             <Plus className="size-4" />
             Invite member
@@ -445,7 +446,7 @@ export function MembersTab() {
 
       {/* Pending invitations — admin+ only */}
       <RequireRole min="admin">
-        <div>
+        <div className="isolate">
           <div className="mb-2 flex items-center gap-2">
             <UsersRound className="size-4 text-muted-foreground" />
             <h3 className="text-sm font-semibold text-foreground">

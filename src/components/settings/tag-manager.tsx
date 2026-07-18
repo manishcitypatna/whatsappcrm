@@ -152,18 +152,19 @@ export function TagManager() {
 
   return (
     <div className="space-y-4 mt-4">
-      <div className="flex items-center justify-between">
+      <div className="isolate flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-foreground">Tags</h2>
           <p className="text-sm text-muted-foreground">Organize your contacts with color-coded tags.</p>
         </div>
         <Button
+          variant="outline"
           onClick={() => {
             setNewTagName('');
             setSelectedColor(PRESET_COLORS[3].value);
             setDialogOpen(true);
           }}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground"
+          className="bg-card backdrop-blur-[var(--blur-glass)] text-foreground hover:bg-surface-sunken hover:text-foreground"
         >
           <Plus className="size-4" />
           New Tag
