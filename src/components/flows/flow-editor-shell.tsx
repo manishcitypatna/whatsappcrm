@@ -78,7 +78,7 @@ export function FlowEditorShell({ initialFlow, initialNodes }: Props) {
 
   return (
     <FlowEditorProvider initialFlow={initialFlow} initialNodes={initialNodes}>
-      <div className="mx-auto flex h-full max-w-4xl flex-col gap-6 p-6">
+      <div className="isolate mx-auto flex h-full max-w-4xl flex-col gap-6 p-6">
         <EditorHeader />
         {!isMobile && (
           <div className="flex items-center justify-end">

@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 export function AppearancePanel() {
   const { mode, setMode } = useTheme();
   return (
-    <section className="space-y-4">
+    <section className="isolate space-y-4">
       <div>
         <h2 className="text-lg font-semibold text-foreground">Mode</h2>
         <p className="mt-1 text-sm text-muted-foreground">

@@ -150,14 +150,14 @@ export default function FlowRunsPage() {
 
   if (loading) {
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="isolate flex h-full items-center justify-center">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </div>
     );
   }
   if (notFound || !flow) {
     return (
-      <div className="flex h-full flex-col items-center justify-center gap-3">
+      <div className="isolate flex h-full flex-col items-center justify-center gap-3">
         <p className="text-sm text-muted-foreground">Flow not found.</p>
         <button
           type="button"
@@ -171,7 +171,7 @@ export default function FlowRunsPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl p-6">
+    <div className="isolate mx-auto max-w-4xl p-6">
       <button
         type="button"
         onClick={() => router.push(`/flows/${flow.id}`)}

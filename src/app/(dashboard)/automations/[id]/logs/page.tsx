@@ -83,7 +83,7 @@ export default function AutomationLogsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
+      <div className="isolate flex items-center gap-3">
         <button
           type="button"
           onClick={() => router.push("/automations")}
@@ -99,7 +99,7 @@ export default function AutomationLogsPage({
       </div>
 
       {logs.length === 0 ? (
-        <div className="flex h-48 flex-col items-center justify-center rounded-xl    bg-card/40">
+        <div className="flex h-48 flex-col items-center justify-center rounded-xl bg-card/40 backdrop-blur-[var(--blur-glass)]">
           <p className="text-sm text-foreground">No executions yet</p>
           <p className="mt-1 text-xs text-muted-foreground">
             Trigger this automation to see runs here.

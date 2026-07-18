@@ -20,16 +20,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
 }
 
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cn(
-        "[&_tr]:shadow-[inset_0_-2px_5px_-2px_var(--shadow-tint)]",
-        className,
-      )}
-      {...props}
-    />
-  )
+  return <thead data-slot="table-header" className={className} {...props} />
 }
 
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
@@ -73,7 +64,12 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0",
+        // Deliberately smaller/uppercase/tracked instead of just
+        // text-foreground font-medium — that combination is identical
+        // to how several body cells render (e.g. a contact's name),
+        // so the header row read as just another row with no visual
+        // separator to compensate.
+        "h-10 px-2 text-left align-middle text-xs font-semibold uppercase tracking-wide whitespace-nowrap text-muted-foreground [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}

@@ -218,7 +218,7 @@ export default function ContactsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="isolate flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Contacts</h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -231,16 +231,15 @@ export default function ContactsPage() {
             canAct={canEdit}
             gateReason="add or import contacts"
             onClick={() => setImportOpen(true)}
-            className=" text-foreground hover:bg-surface-sunken"
           >
             <Upload className="size-4" />
             Import
           </GatedButton>
           <GatedButton
+            variant="outline"
             canAct={canEdit}
             gateReason="add or import contacts"
             onClick={openAddForm}
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             <Plus className="size-4" />
             Add Contact
@@ -301,7 +300,7 @@ export default function ContactsPage() {
                         variant="outline"
                         size="sm"
                         onClick={openAddForm}
-                        className="mt-2  text-foreground hover:bg-surface-sunken"
+                        className="mt-2"
                       >
                         <Plus className="size-3.5" />
                         Add your first contact

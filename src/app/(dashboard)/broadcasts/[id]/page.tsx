@@ -279,7 +279,7 @@ export default function BroadcastDetailPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-wrap items-start justify-between gap-3">
+      <div className="isolate flex flex-wrap items-start justify-between gap-3">
         <div className="flex items-center gap-4">
           <Button
             variant="outline"
