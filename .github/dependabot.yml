@@ -37,6 +37,14 @@ updates:
       - dependency-name: react-dom
       - dependency-name: tailwindcss
       - dependency-name: eslint-config-next
+      # eslint-config-next bundles its own eslint-plugin-react and
+      # typescript-eslint, both pinned to older major ranges of
+      # these two peers. A major bump here breaks lint/build until
+      # eslint-config-next catches up — allow minor/patch only.
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
 
   # GitHub Actions in .github/workflows/. Catches setup-node /
   # checkout version bumps that keep the CI matrix healthy.
